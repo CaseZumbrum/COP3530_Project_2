@@ -55,7 +55,6 @@ bool Adjacency_List::add(string from, string to){
 }
 
 void Adjacency_List::page_rank(int p) {
-    p--;
     // intialize r
     vector<double> r;
     for(int i = 0; i < this->graph.size(); i++){
@@ -63,7 +62,8 @@ void Adjacency_List::page_rank(int p) {
     }
 
     // for each power iteration
-    for(int g = 0; g < p; g++) {
+    // p - 1 since the first power iteration happens without any matrix multiplication
+    for(int g = 0; g < p-1; g++) {
         // r(t+1)
         vector<double> r_next;
 
