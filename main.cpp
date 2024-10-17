@@ -8,8 +8,9 @@ using namespace std;
 
 int main() {
     int no_lines;
+    int p;
     string from, to;
-    cin >> no_lines;
+    cin >> no_lines >> p;
     Adjacency_List a;
 
     for(int i = 0; i < no_lines; i++)
@@ -18,6 +19,6 @@ int main() {
         a.add(from, to);
     }
 
-    a.page_rank(2);
+    a.page_rank(p);
     return 0;
 }

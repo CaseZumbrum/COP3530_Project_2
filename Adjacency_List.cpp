@@ -55,9 +55,9 @@ bool Adjacency_List::add(string from, string to){
 }
 
 void Adjacency_List::page_rank(int p) {
-
+    p--;
     // intialize r
-    vector<float> r;
+    vector<double> r;
     for(int i = 0; i < this->graph.size(); i++){
         r.push_back(1.0/this->graph.size());
     }
@@ -65,15 +65,16 @@ void Adjacency_List::page_rank(int p) {
     // for each power iteration
     for(int g = 0; g < p; g++) {
         // r(t+1)
-        vector<float> r_next;
+        vector<double> r_next;
 
         // for each node in the graph
         for (int i = 0; i < this->graph.size(); i++) {
-            float sum = 0;
+            double sum = 0;
             // for each node that could be adjacent
             for (int j = 0; j < this->graph.size(); j++) {
                 // if the node is adjacent, add it multiplied by the previous r
-                // matrix multiplication
+                // matrix multiplication MxR happens here
+                // do not create adjacency matrix, but same effect
                 if (find(this->graph[j].begin(), this->graph[j].end(), i) != this->graph[j].end()) {
                     // weight is based on the out degree of j
                     sum += ((1.0 / this->graph[j].size()) * r[j]);
@@ -89,6 +90,6 @@ void Adjacency_List::page_rank(int p) {
     // printing r
     cout << "-----------------------" << endl;
     for(int i = 0; i < r.size(); i++){
-        cout << r[i] << endl;
+        cout << this->id_to_name[i] << ": " <<  r[i] << endl;
     }
 }
