@@ -20,6 +20,8 @@ void Adjacency_List::print() {
 bool Adjacency_List::add(string from, string to){
     int from_id;
     int to_id;
+
+    // from is new
     if(this->name_to_id.find(from) == this->name_to_id.end()){
 
         from_id = this->id_to_name.size();
@@ -31,6 +33,7 @@ bool Adjacency_List::add(string from, string to){
         from_id = this->name_to_id[from];
     }
 
+    // to is new
     if(this->name_to_id.find(to) == this->name_to_id.end()){
 
         to_id = this->id_to_name.size();
@@ -42,35 +45,48 @@ bool Adjacency_List::add(string from, string to){
         to_id = this->name_to_id[to];
     }
 
-    graph[from_id].push_back(to_id);
-    if (graph.find(to_id)==graph.end()) {
-        graph[to_id] = {};
+    // update graph
+    this->graph[from_id].push_back(to_id);
+    // add to_id to graph
+    if (this->graph.find(to_id)==this->graph.end()) {
+        this->graph[to_id] = {};
     }
     return true;
 }
 
 void Adjacency_List::page_rank(int p) {
 
+    // intialize r
     vector<float> r;
     for(int i = 0; i < this->graph.size(); i++){
         r.push_back(1.0/this->graph.size());
     }
 
+    // for each power iteration
     for(int g = 0; g < p; g++) {
+        // r(t+1)
         vector<float> r_next;
 
+        // for each node in the graph
         for (int i = 0; i < this->graph.size(); i++) {
             float sum = 0;
+            // for each node that could be adjacent
             for (int j = 0; j < this->graph.size(); j++) {
+                // if the node is adjacent, add it multiplied by the previous r
+                // matrix multiplication
                 if (find(this->graph[j].begin(), this->graph[j].end(), i) != this->graph[j].end()) {
+                    // weight is based on the out degree of j
                     sum += ((1.0 / this->graph[j].size()) * r[j]);
                 }
             }
+            // update r_next
             r_next.push_back(sum);
         }
+        // r(t+1)
         r = r_next;
     }
 
+    // printing r
     cout << "-----------------------" << endl;
     for(int i = 0; i < r.size(); i++){
         cout << r[i] << endl;

@@ -9,7 +9,6 @@ using namespace std;
 int main() {
     int no_lines;
     string from, to;
-    map<string, vector<string>> graph;
     cin >> no_lines;
     Adjacency_List a;
 
@@ -19,7 +18,6 @@ int main() {
         a.add(from, to);
     }
 
-    a.print();
     a.page_rank(2);
     return 0;
 }
