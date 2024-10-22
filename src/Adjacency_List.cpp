@@ -55,7 +55,7 @@ bool Adjacency_List::add(string from, string to){
     return true;
 }
 
-void Adjacency_List::page_rank(int p) {
+map<string, double> Adjacency_List::page_rank(int p) {
     // intialize r
     vector<double> r;
     for(int i = 0; i < this->graph.size(); i++){
@@ -89,7 +89,9 @@ void Adjacency_List::page_rank(int p) {
     }
 
     // printing r
+    map<string, double> m;
     for(auto i = name_to_id.begin(); i != name_to_id.end(); i++){
-        cout << i->first << " " << fixed << setprecision(2) << r[i->second] << endl;
+        m.emplace(i->first, r[i->second]);
     }
+    return m;
 }

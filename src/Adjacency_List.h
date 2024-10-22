@@ -20,5 +20,5 @@ public:
     Adjacency_List();
     bool add(string from, string to);
     void print();
-    void page_rank(int p);
+    map<string, double> page_rank(int p);
 };
