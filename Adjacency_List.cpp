@@ -1,5 +1,6 @@
 #include "Adjacency_List.h"
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
@@ -88,8 +89,7 @@ void Adjacency_List::page_rank(int p) {
     }
 
     // printing r
-    cout << "-----------------------" << endl;
-    for(int i = 0; i < r.size(); i++){
-        cout << this->id_to_name[i] << ": " <<  r[i] << endl;
+    for(auto i = name_to_id.begin(); i != name_to_id.end(); i++){
+        cout << i->first << " " << fixed << setprecision(2) << r[i->second] << endl;
     }
 }
