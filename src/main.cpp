@@ -22,7 +22,9 @@
 //    map<string,double> m = a.page_rank(p);
 //
 //    for(auto i = m.begin(); i != m.end(); i++){
-//        cout << i->first << " " << fixed << setprecision(2) << i->second << endl;
+////        cout << i->first << " " << fixed << setprecision(2) << i->second << endl;
+//        cout << i->first << " " << i->second << endl;
+//
 //    }
 //    return 0;
 //}
