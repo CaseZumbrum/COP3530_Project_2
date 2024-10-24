@@ -1,7 +1,6 @@
 #include "../src/Adjacency_List.h"
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include <vector>
 #include <map>
 #include <limits>
 
