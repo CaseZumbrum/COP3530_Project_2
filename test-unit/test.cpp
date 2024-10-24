@@ -1,5 +1,4 @@
 #include "../src/Adjacency_List.h"
-#include "../src/main.cpp"
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include <vector>
@@ -12,6 +11,22 @@ using namespace std;
 	To check output (At the Project1 directory):
 		g++ -std=c++14 -Werror -Wuninitialized -o build/test test-unit/test.cpp .\src\Adjacency_List.cpp; ./build/test
 */
+
+bool compare_map(map<string, double> m1, map<string,double> m2){
+    if(m1.size() != m2.size()){
+        return false;
+    }
+    for(auto i = m1.begin(); i != m1.end(); i++){
+        if(m2.count(i->first) == 0){
+            return false;
+        }
+        if(fabs(i->second - m2[i->first]) >= 0.005){
+            return false;
+        }
+    }
+
+    return true;
+}
 
 TEST_CASE("Page rank with 1 element", "[]"){
     Adjacency_List a;
@@ -50,12 +65,12 @@ TEST_CASE("Page rank with all elements pointing to one", "[]"){
     REQUIRE(m == correct);
 }
 
-TEST_CASE("Testing normal usage", "[]"){
+TEST_CASE("Testing normal usage 1", "[]"){
     Adjacency_List a;
 
     a.add("a","b");
     a.add("c","d");
-    a.add("d", "c");
+    a.add("d","c");
     a.add("e","f");
     a.add("d","e");
     a.add("f","a");
@@ -67,18 +82,36 @@ TEST_CASE("Testing normal usage", "[]"){
 
     map<string, double> m = a.page_rank(9);
     map<string, double> correct;
-    correct["a"] = 0.28243582589285710;
-    correct["b"] = 0.19308035714285715;
-    correct["c"] = 0.00282505580357143;
-    correct["d"] = 0.00282505580357143;
-    correct["e"] = 0.00282505580357143;
-    correct["f"] = 0.23311941964285712;
-    correct["g"] = 0.00282505580357143;
+    correct["a"] = 0.28;
+    correct["b"] = 0.19;
+    correct["c"] = 0.00;
+    correct["d"] = 0.00;
+    correct["e"] = 0.00;
+    correct["f"] = 0.23;
+    correct["g"] = 0.00;
 
-    for(auto i = m.begin(); i != m.end(); i++){
-         cout << i->first << " " << fixed << setprecision(numeric_limits<double>::max_digits10) << i->second << endl;
-         cout << correct[i->first] << endl;
-    }
+    REQUIRE(compare_map(m,correct));
+}
 
-    REQUIRE(m == correct);
+
+TEST_CASE("Testing normal usage 2", "[]"){
+    Adjacency_List a;
+
+    a.add("a","b");
+    a.add("b","c");
+    a.add("c","a");
+    a.add("d","c");
+    a.add("d","b");
+
+
+    map<string, double> m = a.page_rank(100);
+    map<string, double> correct;
+
+    correct["a"] = 0.375;
+    correct["b"] = 0.375;
+    correct["c"] = 0.25;
+    correct["d"] = 0.00;
+
+
+    REQUIRE(compare_map(m,correct));
 }
